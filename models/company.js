@@ -106,6 +106,7 @@ class Company {
           numEmployees: "num_employees",
           logoUrl: "logo_url",
         });
+    console.log('//////////////////', setCols, '\\\\\\\\\\', values)
     const handleVarIdx = "$" + (values.length + 1);
 
     const querySql = `UPDATE companies 

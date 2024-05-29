@@ -106,6 +106,42 @@ describe("GET /companies", function () {
         .set("authorization", `Bearer ${u1Token}`);
     expect(resp.statusCode).toEqual(500);
   });
+
+  test('test filtered results using name', async function () {
+    const resp = await request(app).get('/companies').send({ name: 'c2'});
+    expect(resp.statusCode).toEqual(200)
+    expect(resp.body).toEqual({ companies: [{
+      handle: "c2",
+      name: "C2",
+      description: "Desc2",
+      numEmployees: 2,
+      logoUrl: "http://c2.img",
+    }]});
+  });
+
+  test('test filtered results number of employees range', async function () {
+    const resp = await request(app).get('/companies').send({ minEmployees: 2, maxEmployees: 3 });
+    expect(resp.statusCode).toEqual(200)
+    expect(resp.body).toEqual({ companies: [{
+      handle: "c2",
+      name: "C2",
+      description: "Desc2",
+      numEmployees: 2,
+      logoUrl: "http://c2.img",
+    }, {
+      handle: "c3",
+      name: "C3",
+      description: "Desc3",
+      numEmployees: 3,
+      logoUrl: "http://c3.img",
+    }]});
+  });
+
+  test('test invalid filtered results', async function () {
+    const resp = await request(app).get('/companies').send({ minEmployees: 5, maxEmployees: 3 });
+    expect(resp.statusCode).toEqual(400)
+  });
+
 });
 
 /************************************** GET /companies/:handle */

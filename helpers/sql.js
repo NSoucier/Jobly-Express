@@ -5,7 +5,7 @@ const { BadRequestError } = require("../expressError");
  *  dataToUpdate: an object containing the data to update
  *  jsToSql: an object converting the keys to the sql column names
  * 
- *  Returns object of sql columns and corresponding values to be updated:
+ *  Returns object of sql columns (as a string) and corresponding values (as a list) to be updated:
  *  { 
  *     setCols: '"column1"=$1, "column2"=$2, ...'
  *     values: [value1, value2, ...]
@@ -13,7 +13,7 @@ const { BadRequestError } = require("../expressError");
  */
 
 function sqlForPartialUpdate(dataToUpdate, jsToSql) {
-  console.log('**********************', dataToUpdate, '********', jsToSql)
+  // console.log('**********************', dataToUpdate, '********', jsToSql)
   const keys = Object.keys(dataToUpdate);
   if (keys.length === 0) throw new BadRequestError("No data");
 

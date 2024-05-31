@@ -87,6 +87,38 @@ describe("findAll", function () {
   });
 });
 
+
+/************************************** findWhere */
+
+describe("findWhere", function () {
+  test('works: with name filter', async function () {
+    let companies = await Company.findWhere({ name: "c2" });
+    expect(companies).toEqual([{
+      handle: "c2",
+      name: "C2",
+      description: "Desc2",
+      numEmployees: 2,
+      logoUrl: "http://c2.img",
+    }]);
+  });
+
+  test('works: with employee filter', async function () {
+    let companies = await Company.findWhere({ minEmployees: 3 });
+    expect(companies).toEqual([{
+      handle: "c3",
+      name: "C3",
+      description: "Desc3",
+      numEmployees: 3,
+      logoUrl: "http://c3.img",
+    }]);
+  });
+  
+  test('does not work: invalid employee range', async function () {
+    let companies = await Company.findWhere({ minEmployees: 5, maxEmployees: 2 });
+    expect(companies).toEqual([]);
+  });
+});
+
 /************************************** get */
 
 describe("get", function () {

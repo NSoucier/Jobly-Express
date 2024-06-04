@@ -48,22 +48,17 @@ router.post("/", ensureAdmin, async function (req, res, next) {
 
 router.get("/", async function (req, res, next) {
   try {
-    // // destructure JSON body for filters
-    // let { name, minEmployees, maxEmployees } = req.body;
-    // // if filters have been passed through
-    // if (name || minEmployees || maxEmployees) {
-    //   // throw error if max < min employees 
-    //   if (maxEmployees < minEmployees) throw new ExpressError('minEmployees cannot be greater than maxEmployees', 400);
-    //   const companies = await Company.findWhere(req.body)
-    //   return res.json({ companies })
-    // } else {
-    //   // show all companies if no filters are present 
-    //   const companies = await Company.findAll();      
-    //   return res.json({ companies });
-    // }
-
-    const jobs = await Job.findAll();      
-    return res.json({ jobs });
+    // destructure JSON body for filters
+    let { title, minSalary, hasEquity } = req.body;
+    // if filters have been passed through
+    if (title || minSalary || hasEquity) {
+      const jobs = await Job.findWhere(req.body)
+      return res.json({ jobs })
+    } else {
+      // show all companies if no filters are present 
+      const jobs = await Job.findAll();      
+      return res.json({ jobs });
+    }
   } catch (err) {
     return next(err);
   }

@@ -43,55 +43,52 @@ class Job {
     return resp.rows;
   }
 
-  /** Find all companies where filters are met.
+  /** Find all jobs where filters are met.
    * 
    * filters: {colName: filter_value, ...}
    *
-   * Returns [{ handle, name, description, numEmployees, logoUrl }, ...]
+   * Returns [{ title, salary, equity, company_handle }, ...]
    * */
 
-    // static async findWhere(filters) {
-    //   let filter = [];
-    //   let values = [];
-    //   let index = 1;
+    static async findWhere(filters) {
+      let filter = [];
+      let values = [];
+      let index = 1;
 
-    //   // add name filter to query
-    //   if (!!filters.name) {
-    //     values.push(`%${filters.name}%`)
-    //     filter.push(`"name" ILIKE $${index}`)
-    //     index++;
-    //   }
+      // add title filter to query
+      if (!!filters.title) {
+        values.push(`%${filters.title}%`)
+        filter.push(`"title" ILIKE $${index}`)
+        index++;
+      }
 
-    //   // add minEmployees filter to query
-    //   if (!!filters.minEmployees) {
-    //     values.push(filters.minEmployees)
-    //     filter.push(`"num_employees" >= $${index}`)
-    //     index++;
-    //   }
+      // add minSalary filter to query
+      if (!!filters.minSalary) {
+        values.push(filters.minSalary)
+        filter.push(`"salary" >= $${index}`)
+        index++;
+      }
 
-    //   // add maxEmployees filter to query 
-    //   if (!!filters.maxEmployees) {
-    //     values.push(filters.maxEmployees)
-    //     filter.push(`"num_employees" <= $${index}`)
-    //     index++;
-    //   }
+      // add hasEquity filter to query 
+      if (filters.hasEquity) {
+        filter.push(`"equity" > 0`)
+      }
       
-    //   // join query by AND if more than one query exists
-    //   filter = filter.join(' AND ');
-    //   // console.log('***********************************', filter, values)
+      // join query by AND if more than one query exists
+      filter = filter.join(' AND ');
+      // console.log('***********************************', filter, values)
 
-    //   const companiesRes = await db.query(
-    //         `SELECT handle,
-    //                 name,
-    //                 description,
-    //                 num_employees AS "numEmployees",
-    //                 logo_url AS "logoUrl"
-    //          FROM companies
-    //          WHERE ${filter}
-    //          ORDER BY name`,
-    //         values);
-    //   return companiesRes.rows;
-    // }
+      const jobsResp = await db.query(
+            `SELECT title,
+                    salary,
+                    equity,
+                    company_handle AS "companyHandle"
+             FROM jobs
+             WHERE ${filter}
+             ORDER BY title`,
+            values);
+      return jobsResp.rows;
+    }
 
   /** Given a job id, return data about job.
    *

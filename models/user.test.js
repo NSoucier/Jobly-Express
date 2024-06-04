@@ -4,6 +4,7 @@ const {
   NotFoundError,
   BadRequestError,
   UnauthorizedError,
+  ExpressError,
 } = require("../expressError");
 const db = require("../db.js");
 const User = require("./user.js");
@@ -225,6 +226,40 @@ describe("remove", function () {
       fail();
     } catch (err) {
       expect(err instanceof NotFoundError).toBeTruthy();
+    }
+  });
+});
+
+
+/************************************** apply */
+
+describe('apply', function () {
+  test('works', async function () {
+    await User.apply("u1", 1);
+    await User.apply("u1", 2);
+    
+    const res = await db.query(`select * from applications`);
+    expect(res.rows.length).toEqual(2);
+    expect(res.rows).toEqual([{username: "u1", job_id: 1},
+      {username: "u1", job_id: 2}])
+  });
+
+  test("express error if dupplicate", async function () {
+    try {
+      await User.apply("u1", 1);
+      await User.apply("u1", 1);
+      fail();
+    } catch (err) {
+      expect(err instanceof ExpressError).toBeTruthy();
+    }
+  });
+
+  test("express error if job id not found", async function () {
+    try {
+      await User.apply("u1", 3);
+      fail();
+    } catch (err) {
+      expect(err instanceof ExpressError).toBeTruthy();
     }
   });
 });

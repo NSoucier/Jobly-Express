@@ -39,7 +39,8 @@ async function commonBeforeAll() {
 
   await db.query(`
       INSERT INTO jobs (id, title, salary, equity, company_handle)
-      VALUES (1, 'job0', '0', '0', 'c1')`);
+      VALUES (1, 'job0', '0', '0', 'c1'),
+             (2, 'job2', '2000', '0.05', 'c1')`);
 
   await User.register({
     username: "u1",

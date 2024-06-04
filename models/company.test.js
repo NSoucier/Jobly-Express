@@ -130,6 +130,19 @@ describe("get", function () {
       description: "Desc1",
       numEmployees: 1,
       logoUrl: "http://c1.img",
+      jobs: [{
+        title: "job0",
+        salary: 0,
+        equity: "0",
+        companyHandle: "c1",
+        id: 1
+      },{
+        title: "job2",
+        salary: 2000,
+        equity: "0.05",
+        companyHandle: "c1",
+        id: 2
+      }]
     });
   });
 

@@ -58,41 +58,51 @@ describe("findAll", function () {
         equity: "0",
         companyHandle: "c1",
       },
+      {
+        title: "job2",
+        salary: 2000,
+        equity: "0.05",
+        companyHandle: "c1",
+      }
     ]);
   });
 });
 
 
-// /************************************** findWhere */
+/************************************** findWhere */
 
-// describe("findWhere", function () {
-//   test('works: with name filter', async function () {
-//     let companies = await Company.findWhere({ name: "c2" });
-//     expect(companies).toEqual([{
-//       handle: "c2",
-//       name: "C2",
-//       description: "Desc2",
-//       numEmployees: 2,
-//       logoUrl: "http://c2.img",
-//     }]);
-//   });
+describe("findWhere", function () {
+  test('works: with salary filter', async function () {
+    let jobs = await Job.findWhere({ minSalary: 1000 });
+    expect(jobs).toEqual([{
+      title: "job2",
+      salary: 2000,
+      equity: "0.05",
+      companyHandle: "c1",
+    }]);
+  });
 
-//   test('works: with employee filter', async function () {
-//     let companies = await Company.findWhere({ minEmployees: 3 });
-//     expect(companies).toEqual([{
-//       handle: "c3",
-//       name: "C3",
-//       description: "Desc3",
-//       numEmployees: 3,
-//       logoUrl: "http://c3.img",
-//     }]);
-//   });
+  test('works: with equity filter', async function () {
+    let jobs = await Job.findWhere({ hasEquity: true });
+    expect(jobs).toEqual([{
+      title: "job2",
+      salary: 2000,
+      equity: "0.05",
+      companyHandle: "c1",
+    }]);
+  });
   
-//   test('does not work: invalid employee range', async function () {
-//     let companies = await Company.findWhere({ minEmployees: 5, maxEmployees: 2 });
-//     expect(companies).toEqual([]);
-//   });
-// });
+  test('works: with title filter', async function () {
+    let jobs = await Job.findWhere({ title: "job0" });
+    expect(jobs).toEqual([{
+      title: "job0",
+      salary: 0,
+      equity: "0",
+      companyHandle: "c1",
+    }]);
+  });
+
+});
 
 /************************************** get */
 

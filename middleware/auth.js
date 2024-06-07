@@ -35,7 +35,6 @@ function authenticateJWT(req, res, next) {
 
 function ensureLoggedIn(req, res, next) {
   try {
-    // console.log(res.locals.user, '{{{{{{{{{{{{{{{{{{{{{{{{{{{{')
     if (!res.locals.user) throw new UnauthorizedError();
     return next();
   } catch (err) {
@@ -54,9 +53,6 @@ function ensureAdmin(req, res, next) {
 
 function ensureUserOrAdmin(req, res, next) {
   try {
-    // console.log('//////////////////////////', !!res.locals.user )
-    // console.log('//////////////////////////', (res.locals.user.username === req.params.username || res.locals.user.isAdmin) )
-
     if (!res.locals.user || !(res.locals.user.username === req.params.username || res.locals.user.isAdmin)) {
       throw new UnauthorizedError();
     }

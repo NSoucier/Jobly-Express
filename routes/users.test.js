@@ -390,7 +390,6 @@ describe("DELETE /users/:username", function () {
   });
 
   test("unauth for anon", async function () {
-    console.log('unauth for anonnnnnnnnnnnnnnn')
     const resp = await request(app)
         .delete(`/users/u1`);
     expect(resp.statusCode).toEqual(401);

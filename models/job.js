@@ -76,7 +76,6 @@ class Job {
       
       // join query by AND if more than one query exists
       filter = filter.join(' AND ');
-      // console.log('***********************************', filter, values)
 
       const jobsResp = await db.query(
             `SELECT title,
@@ -129,7 +128,6 @@ class Job {
         {
           companyHandle: "company_handle",
         });
-    console.log('//////////////////', setCols, '\\\\\\\\\\', values)
     const handleVarIdx = "$" + (values.length + 1);
 
     const querySql = `UPDATE jobs 
@@ -139,7 +137,6 @@ class Job {
     const result = await db.query(querySql, [...values, id]);
     const job = result.rows[0];
 
-    console.log('%%%%%%%%%%%%%%%%%%%', job)
 
     if (!job) throw new NotFoundError(`No job id: ${id}`);
 

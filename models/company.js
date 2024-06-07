@@ -96,7 +96,6 @@ class Company {
       
       // join query by AND if more than one query exists
       filter = filter.join(' AND ');
-      // console.log('***********************************', filter, values)
 
       const companiesRes = await db.query(
             `SELECT handle,
@@ -166,7 +165,6 @@ class Company {
           numEmployees: "num_employees",
           logoUrl: "logo_url",
         });
-    // console.log('//////////////////', setCols, '\\\\\\\\\\', values)
     const handleVarIdx = "$" + (values.length + 1);
 
     const querySql = `UPDATE companies 
